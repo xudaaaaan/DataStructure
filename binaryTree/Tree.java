@@ -53,6 +53,23 @@ public class Tree {
 		}
 	}
 	
+	//find the successor of the node to be deleted
+	private Node getSuccessor(Node delNode){
+		Node successor = delNode;
+		Node current = delNode.rightChild;
+		Node sucFather = delNode;
+		while(current != null){
+			sucFather = successor;
+			successor = current;
+			current = current.leftChild;
+		}
+		if(successor != delNode.rightChild){
+			sucFather.leftChild = successor.rightChild;
+			successor.rightChild = delNode.rightChild;
+		}
+		return successor;
+	}
+	
 	//delete a node
 	public boolean delete(int key){
 		//find the node to be deleted
@@ -110,7 +127,15 @@ public class Tree {
 		}
 		//the node to be deleted has two children
 		else{
-			
+			Node successor = getSuccessor(present);
+			if(present == root){
+				root = successor;
+			}else if(isLeftChild){
+				father.leftChild = successor;
+			}else{
+				father.rightChild = successor;
+			}
+			successor.leftChild = present.leftChild;
 		}
 		return true;
 	}
@@ -119,9 +144,10 @@ public class Tree {
 	public void preOrder(Node localRoot){
 		if(localRoot != null){
 			localRoot.displayNode();
-			inOrder(localRoot.leftChild);
-			inOrder(localRoot.rightChild);
+			preOrder(localRoot.leftChild);
+			preOrder(localRoot.rightChild);
 		}
+		System.out.print("\n");
 		
 	}
 	
@@ -131,17 +157,19 @@ public class Tree {
 			inOrder(localRoot.leftChild);
 			localRoot.displayNode();
 			inOrder(localRoot.rightChild);
+			
 		}
-		
+		System.out.print("\n");
 	}
 	
 	//后序遍历
 	public void postOrder(Node localRoot){
 		if(localRoot != null){
-			inOrder(localRoot.leftChild);
-			inOrder(localRoot.rightChild);
+			postOrder(localRoot.leftChild);
+			postOrder(localRoot.rightChild);
 			localRoot.displayNode();
 		}
+		System.out.print("\n");
 	}
 
 }

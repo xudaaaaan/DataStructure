@@ -19,8 +19,9 @@ public class TreeApp {
 		
 		//find
 		newTree.find(7).displayNode();
+		newTree.preOrder(newTree.find(1));
 		//delete
-		//newTree.delete(7);
+		newTree.delete(7);
 		//inOrder
 		newTree.inOrder(newTree.find(1));
 		
